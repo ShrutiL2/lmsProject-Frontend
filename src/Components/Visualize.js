@@ -1,30 +1,12 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 class Visualize extends React.Component {
-    
+    constructor(props){
+       super(props);
+      //alert(props.data[1].name +">>"+ props.data[0].value);
+    }
    COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
-   pieData = [
-      {
-         name: "Apple",
-         value: 54.85
-      },
-      {
-         name: "Samsung",
-         value: 47.91
-      },
-      {
-         name: "Redmi",
-         value: 16.85
-      },
-      {
-         name: "One Plus",
-         value: 16.14
-      },
-      {
-         name: "Others",
-         value: 10.25
-      }
-   ];
+   pieData = this.props.data;
    CustomTooltip = ({ active, payload, label }) => {
       if (active) {
          return (
@@ -36,7 +18,7 @@ class Visualize extends React.Component {
                border: "1px solid #cccc"
             }}
          >
-            <label>{`${payload[0].name} : ${payload[0].value}%`}</label>
+            <label>{`${payload[0].name} : ${payload[0].value}`}</label>
          </div>
       );
    }

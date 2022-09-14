@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Visualize from './Visualize'
+import emailjs from '@emailjs/browser';
+
 const ManagerProfile = () => {
 
     const [manager, setManager] = useState({
@@ -44,7 +46,7 @@ const ManagerProfile = () => {
     const[showChart,setShowChart]=useState(false);
     const [isApproved, setIsApproved] = useState(false);
     const [isDenied, setIsDenied] = useState(false);
-
+    const[graphData, setGraphData]= useState([]);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -116,10 +118,19 @@ const ManagerProfile = () => {
 
     const handleApprove = (leave) => {
 
-        /*if(leave.leaveinhand<=0){
-            alert("don't have enough balance");
-            return;
-        }*/
+        var templateparams={
+            "from_name":"Your Manager",
+            "message":`Your ${leave.leavetype} leave request from ${leave.leavefrom} to ${leave.leaveto} has been approved`
+            
+        };
+    
+        emailjs.send('service_50gmywn', 'template_2fuqijc', templateparams, 'IwpiSK40hoj4-I3yM')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+          
         const {empid}=leave;
         var employee = {};
         for(var i=0; i< emps.length;i++){
@@ -175,6 +186,18 @@ const ManagerProfile = () => {
         
     }
     const handleDeny = (leave) => {
+        var templateparams={
+            "from_name":"Your Manager",
+            "message":`Your ${leave.leavetype} leave request from ${leave.leavefrom} to ${leave.leaveto} has been denied`
+        };
+    
+        emailjs.send('service_50gmywn', 'template_2fuqijc', templateparams, 'IwpiSK40hoj4-I3yM')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+        
         var leaveObject = {
             ...leave,
             "leavestatus": "denied"
@@ -205,7 +228,71 @@ const ManagerProfile = () => {
           setShowEmps(false);
         if(showLeaves)
          setShowLeaves(false);
+        var countMaternity=0;
+        var countExam=0;
+        var countPaternity=0;
+        var countVacation=0;
+        var countMedical=0;
+        var countEmergency=0;
+
+        var filtteredLeaves = [];
+        for(var i=0;i<leaves.length;i++){
+            if(leaves[i].leavetype.toLowerCase() === "medical")
+            {
+                countMedical++;
+            }
+            if(leaves[i].leavetype.toLowerCase() === "vacation")
+            {
+                countVacation++;
+            }
+            if(leaves[i].leavetype.toLowerCase() === "emergency")
+            {
+                countEmergency++;
+            }
+            if(leaves[i].leavetype.toLowerCase() === "maternity")
+            {
+                countMaternity++;
+            }
+            if(leaves[i].leavetype.toLowerCase() === "paternity")
+            {
+                countPaternity++;
+            }
+            if(leaves[i].leavetype.toLowerCase() === "exam ")
+            {
+                countExam++;
+            }
+           
+            filtteredLeaves= [
+                {
+                   name: "Medical",
+                   value: countMedical
+                },
+                {
+                   name: "Vacation",
+                   value: countVacation
+                },
+                {
+                   name: "Emergency",
+                   value: countEmergency
+                },
+                {
+                   name: "Maternity",
+                   value: countMaternity
+                },
+                {
+                   name: "Paternity",
+                   value: countPaternity
+                },
+                {
+                    name: "Exam",
+                    value: countExam
+                 }
+             ];
+
+             setGraphData(filtteredLeaves);
+        }
     }
+
 
     return (
         <div>
@@ -224,8 +311,8 @@ const ManagerProfile = () => {
             
             <div style={{marginTop:"2%"}}>
             <button className="btn btn-lg btn-success" onClick={showEmployees} style={{width:"32%"}}>My Employees</button>
-            <button className="btn btn-lg btn-primary" onClick={showLeavesForManager} style={{marginLeft:"2%",width:"32%"}}>Show Leaves</button>
-            <button className="btn btn-lg btn-success" onClick={displayGraph} style={{marginLeft:"2%",width:"32%"}}>Display Chart</button>
+            <button className="btn btn-lg btn-primary" onClick={showLeavesForManager} style={{marginLeft:"2%",width:"32%"}}>Approve/Deny Leave Request</button>
+            <button className="btn btn-lg btn-success" onClick={displayGraph} style={{marginLeft:"2%",width:"32%"}}>Number of leaves</button>
             </div>
             
             <Card style={{marginTop:"1%"}}>
@@ -274,8 +361,8 @@ const ManagerProfile = () => {
                     {leaves.map(e => (
                         <tr key={e.id}>
                             <td>{e.empid}</td>
-                            <td>{e.leavefrom}</td>
-                            <td>{e.leaveto}</td>
+                            <td>{e.leavefrom.split("T")[0]}</td>
+                            <td>{e.leaveto.split("T")[0]}</td>
                             <td>{e.noofdays}</td>
                             <td>{e.leavetype}</td>
                             {e.leavestatus == "pending" && 
@@ -309,7 +396,7 @@ const ManagerProfile = () => {
                 </table>
             }
             </Card>
-            {showChart && <Visualize />}
+            {showChart && <Visualize  data={graphData} />}
             </Container>
         </div>
     

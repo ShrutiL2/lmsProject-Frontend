@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Moment from 'moment';
 import {useNavigate,useParams} from 'react-router-dom';
-
+import emailjs from '@emailjs/browser';
 
 const AddLeave = () => {
 
@@ -94,6 +94,18 @@ const AddLeave = () => {
    
     const handleSubmit = (event) => {
         //event.preventDefault();
+        event.preventDefault();
+        var templateparams={
+            "from_name":"Hexaware",
+            "message":`Your ${event.leavetype} leave request form ${event.leavefrom} to ${event.leaveto} has been inserted successfully`
+        }
+     emailjs.send('service_50gmywn', 'template_2fuqijc', templateparams, 'IwpiSK40hoj4-I3yM')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+
         setInputs({...inputs,"empid":id,"manid":emp.managerid});
         
         
@@ -112,7 +124,7 @@ const AddLeave = () => {
                 alert("Submitted to Manager for approval!")
                 navigate(`/empdash/${id}`)}
                 );
-
+        
         
             
     }
