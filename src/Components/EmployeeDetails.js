@@ -29,7 +29,7 @@ const EmployeeDetails = () => {
     const { id} = useParams();
      
     useEffect(() => {
-        fetch(`http://localhost:5196/api/Employees/${id}`)
+        fetch(`http://localhost:23040/api/Employees/${id}`)
             .then(res => res.json())
             .then(res => {
                 setEmp(res);
@@ -43,11 +43,11 @@ const EmployeeDetails = () => {
 
         
         <div className="card" style={{
-        marginTop: "150px",
+        marginTop: "100px",
         marginLeft: 450,
         marginRight: 450,
         backgroundColor:"darkgrey",
-        height: "360px"
+        height: "400px"
 
         }}   >
         <div className="card-header" style={{backgroundColor:"darkgrey"}}><h3>Employee Details</h3></div>
@@ -75,6 +75,10 @@ const EmployeeDetails = () => {
                 <tr className="fs-4">
                 <td style={{paddingLeft:"50px"}}>Phone Number: </td>
                 <td style={{ textAlign:"center" , paddingLeft:"120px"}}>{emp.phnumber}</td>
+                </tr>
+                <tr className="fs-4">
+                <td style={{paddingLeft:"50px"}}>Leave In Hand </td>
+                <td style={{ textAlign:"center" , paddingLeft:"120px"}}>{emp.leaveinhand}</td>
                 </tr>
             </table>
             </div>

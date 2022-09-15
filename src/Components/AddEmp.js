@@ -39,7 +39,7 @@ const AddEmp = () => {
 
             })
         };
-        fetch('http://localhost:5196/api/Employees/', requestOptions)
+        fetch('http://localhost:23040/api/Employees/', requestOptions)
             .then(response => response.json())
             .then(response => {navigate(`/employees`)})
             .then(data => setSubmit(data.id))

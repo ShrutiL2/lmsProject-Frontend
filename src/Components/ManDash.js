@@ -57,7 +57,7 @@ const ManagerProfile = () => {
     useEffect(() => {
 
         //get manager details
-            fetch(`http://localhost:5196/api/Employees/${id}`)
+            fetch(`http://localhost:23040/api/Employees/${id}`)
             .then(res => res.json())
             .then(res => {
                 setManager(res);
@@ -68,7 +68,7 @@ const ManagerProfile = () => {
             });
 
            // get all emps working under manager
-            fetch(`http://localhost:5196/api/Employees/undermanager/${id}`)
+            fetch(`http://localhost:23040/api/Employees/undermanager/${id}`)
             .then(res => res.json())
                 .then(res => {
                     setEmps(res);
@@ -79,7 +79,7 @@ const ManagerProfile = () => {
                 
             });
           //get leaves under manager
-        fetch(`http://localhost:5196/api/Leaves/bymanagerid/${id}`)
+        fetch(`http://localhost:23040/api/Leaves/bymanagerid/${id}`)
             .then(res => res.json())
             .then(res => {
                 setLeaves(res);
@@ -141,7 +141,7 @@ const ManagerProfile = () => {
             }
 
         }
-        fetch(`http://localhost:5196/api/Employees/${empid}`,{
+        fetch(`http://localhost:23040/api/Employees/${empid}`,{
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -164,7 +164,7 @@ const ManagerProfile = () => {
         const { leaveid } = leave;
        
         //update
-        fetch(`http://localhost:5196/api/Leaves/${leaveid}`, {
+        fetch(`http://localhost:23040/api/Leaves/${leaveid}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -205,7 +205,7 @@ const ManagerProfile = () => {
         const { leaveid } = leave;
 
         //update
-        fetch(`http://localhost:5196/api/Leaves/${leaveid}`, {
+        fetch(`http://localhost:23040/api/Leaves/${leaveid}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -296,8 +296,8 @@ const ManagerProfile = () => {
 
     return (
         <div>
-            <button className="btn btn-secondary" onClick={logOut}>Logout</button>
-            <Container style={{marginTop:"20px"}}>
+            <button className="btn btn-secondary" onClick={logOut}style={{marginLeft:"93%", marginTop:"1%"}}>Logout</button>
+            <Container style={{marginTop:"5px"}}>
                 <Card style={{background:"#0d6efd"}}>
 
             <Card.Header><h2 style={{marginLeft:"35%"}}>{manager.empname}'s Dashboard</h2></Card.Header>

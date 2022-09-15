@@ -28,7 +28,7 @@ const LeaveStatus = () => {
     
      
     useEffect(() => {
-        fetch(`http://localhost:5196/api/Leaves/byempid/${id}`)
+        fetch(`http://localhost:23040/api/Leaves/byempid/${id}`)
         .then(res=> res.json())
             .then(res => {
                 setLeave(res);

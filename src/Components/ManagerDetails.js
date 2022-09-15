@@ -29,7 +29,7 @@ const ManagerDetails = () => {
     const { id} = useParams();
      
     useEffect(() => {
-        fetch(`http://localhost:5196/api/Employees/${id}`)
+        fetch(`http://localhost:23040/api/Employees/${id}`)
             .then(res => res.json())
             .then(res => {
                 setEmp(res);

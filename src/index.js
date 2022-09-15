@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Kommunicate from '@kommunicate/kommunicate-chatbot-plugin';
 import './index.css';
 import App from './App';
 import Home from './Components/Home';
@@ -46,7 +47,7 @@ export default function App1() {
 }
 
 
-
+Kommunicate.init("3ffb821dc33df60a9c35ad1f9ff8f612b" );
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <App1 />

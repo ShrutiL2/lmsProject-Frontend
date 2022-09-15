@@ -118,7 +118,7 @@ const AddLeave = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(inputs)
         };
-        fetch('http://localhost:5196/api/Leaves/', requestOptions)
+        fetch('http://localhost:23040/api/Leaves/', requestOptions)
             .then(response => response.json())
             .then(response => {
                 alert("Submitted to Manager for approval!")
@@ -130,7 +130,7 @@ const AddLeave = () => {
     }
     
     useEffect(() => {
-        fetch(`http://localhost:5196/api/Employees/${id}`)
+        fetch(`http://localhost:23040/api/Employees/${id}`)
             .then(res => res.json())
             .then(res => {
                 setEmp(res);
@@ -194,6 +194,7 @@ const AddLeave = () => {
                 <Form.Group style={{ paddingBottom: 15 }}>
                     <Form.Label>Enter leave type:</Form.Label>
                     <select id="leavetype" onChange={handleChange("leavetype")}>
+                        <option value=""></option>
                         <option value="Medical">Medical </option>
                         <option value="Vacation">Vacation</option>
                         <option value="Emergency">Emergency</option>
